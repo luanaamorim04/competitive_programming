@@ -20,13 +20,18 @@
 #define dbug(x) cout << #x << ": " << x << endl
 #define dbugii(x) cout << x.first << ' ' << x.second << endl
 #define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-
+ 
 using namespace std;
-
+ 
 ll n, resp, a1, a2, b1, b2, idx, ft[MAX];
 pair<int, par> arr[1<<20];
 set<int> pontos;
-
+ 
+/*
+horizontal == (add) update(y, 1), (delete) update(y, -1);
+vertical == query(y2) - query(y1);
+*/
+ 
 int query(int idx)
 {
 	int ans = 0;
@@ -37,7 +42,7 @@ int query(int idx)
 	}
 	return ans;
 }
-
+ 
 void update(int idx, int val)
 {
 	while (idx < MAX)
@@ -46,7 +51,7 @@ void update(int idx, int val)
 		idx += lsb(idx);
 	}
 }
-
+ 
 int main()
 {_
 	cin >> n;
@@ -63,9 +68,9 @@ int main()
 			arr[idx++] = {a2 + ADD, {INF, b1 + ADD}};
 		}
 	}
-
+ 
 	sort(arr, arr+idx);
-
+ 
 	for (int i = 0; i < idx; i++)
 	{
 		auto line = arr[i];
@@ -82,12 +87,6 @@ int main()
 			resp += query(line.second.second) - query(line.second.first - 1);
 		}
 	}
-
+ 
 	cout << resp << endl;
 }
-
-
-
-
-
-
