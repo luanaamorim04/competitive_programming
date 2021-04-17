@@ -65,7 +65,7 @@ int main()
 			continue;
 		}
 
-		menor_letra = (*letters.begin());
+		menor_letra = (*letters.begin()); 
 		if (last != menor_letra)
 		{
 			cout << (char) menor_letra;
