@@ -88,7 +88,7 @@ int main()
 
 	resp[2] = n - resp[2];
 
-	ll tmp = n; resp[3] = n;
+	ll tmp = n; resp[3] = n; 
 	for (int i = pos[n]; i >= 1; i--)
 		if (tmp == arr[i]) tmp--, resp[3]--;
 
