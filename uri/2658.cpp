@@ -11,7 +11,7 @@
 #include <bitset>
 #define ll long long
 #define INF (1e9)
-#define MAX (int) (2e5 + 5)
+#define MAX (int) (4e5 + 5)
 #define MOD 1000000007
 #define par pair<int, int>
 #define all(v) v.begin(), v.end()
@@ -30,37 +30,34 @@ struct tree
 
 	int resp()
 	{
-		int ans = 0;
+		int ans = 8;
 		for (int i = 8; i >= 0; i--)
 			if (freq[ans] < freq[i]) ans = i;
 		return ans;
 	}
-
-	void change(int x)
-	{	
-		int tmp[9];
-		for (int i = 0; i <= 8; i++)
-		{
-			tmp[i] = freq[i];
-			freq[i] = 0;
-		}
-
-		for (int i = 0; i <= 8; i++)
-			freq[((i+x)%9)] += tmp[i];
-	}
 };
 
 tree st[MAX];
-int lazy[MAX], n, m, a, b;
+int lazy[MAX], n, m, a, b, tmp[9];
 
 void push(int idx, int i, int j)
 {
 	if (!lazy[idx]) return;
-	st[idx].change(lazy[idx]);
+
+	for (int i = 0; i <= 8; i++)
+	{
+		tmp[i] = st[idx].freq[i];
+		st[idx].freq[i] = 0;
+	}
+
+	for (int i = 0; i <= 8; i++)
+		st[idx].freq[((i+lazy[idx])%9)] += tmp[i];
+
+
 	if (i != j)
 	{
-		lazy[esq(idx)] = (lazy[esq(idx)] + lazy[idx]);
-		lazy[dir(idx)] = (lazy[dir(idx)] + lazy[idx]);
+		lazy[esq(idx)] += lazy[idx];
+		lazy[dir(idx)] += lazy[idx];
 	}
 
 	lazy[idx] = 0;
@@ -99,20 +96,20 @@ tree query(int idx, int i, int j, int l, int r)
 	return combine(x, y);
 }
 
-void update(int idx, int i, int j, int l, int r)
+void update(int idx, int i, int j, int l, int r, int val)
 {
 	push(idx, i, j);
 	if (i > r || j < l) return;
 	if (i >= l && j <= r)
 	{
-		lazy[idx] = st[idx].resp();
+		lazy[idx] = val;
 		push(idx, i, j);
 		return;
 	}
 
 	int mid = ((i+j)>>1);
-	update(esq(idx), i, mid, l, r);
-	update(dir(idx), mid+1, j, l, r);
+	update(esq(idx), i, mid, l, r, val);
+	update(dir(idx), mid+1, j, l, r, val);
 	st[idx] = combine(st[esq(idx)], st[dir(idx)]);
 }
 
@@ -124,15 +121,12 @@ int main()
 	while (m--)
 	{
 		cin >> a >> b;
-		cout << query(1, 1, n, a+1, b+1).resp() << endl;
-		update(1, 1, n, a+1, b+1);
-		for (int i = 1; i <= n; i++)
-			cout << query(1, 1, n, i, i).resp() << ' ';
-		cout << endl << endl;
+		int val = query(1, 1, n, a+1, b+1).resp();
+		update(1, 1, n, a+1, b+1, val);
 	}
 
-	// for (int i = 1; i <= n; i++)
-	// 	cout << query(1, 1, n, i, i).resp() << endl;
+	for (int i = 1; i <= n; i++)
+		cout << query(1, 1, n, i, i).resp() << endl;
 }
 
 
