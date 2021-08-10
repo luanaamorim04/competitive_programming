@@ -1,2 +1,2 @@
 # programming problems
-  * [cses](#cses)
+  * [cses](cses)
