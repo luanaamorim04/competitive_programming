@@ -3,4 +3,4 @@
   * [cses](cses)
   * [uri](uri)
   * [uva](uva)
-  * [other competitions or OJs](problemas)
+  * [other competitions/OJs](problemas)
