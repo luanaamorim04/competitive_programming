@@ -8,10 +8,13 @@
      * [uva](uva)
    * [random problems](problemas)
 
-   #teste:
-	#include <iostream>
+   # teste:
 
-	int main()
-	{
-		cout << "hello world" << endl;
-	}   
+    ```cpp
+		#include <iostream>
+
+		int main()
+		{
+			cout << "hello" << endl;
+		}
+    ```
