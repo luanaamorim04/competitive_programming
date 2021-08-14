@@ -1,4 +1,4 @@
-## competitive programming solutions:
+## \033[$1;31mcompetitive programming solutions:
   * [national olympiad](obi)
   * [algorithms](algs)
   * OJs
