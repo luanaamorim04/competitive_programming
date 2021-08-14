@@ -1,6 +1,10 @@
 ## competitive programming solutions:
   * [national olympiad](obi)
-  * [cses](cses)
-  * [uri](uri)
-  * [uva](uva)
-  * [other competitions/OJs](problemas)
+  * [algorithms](algs)
+  * OJs
+    * [neps](neps) 
+    * [cses](cses)
+    * [uri](uri)
+    * [uva](uva)
+    * [other competitions/OJs](problemas)
+
