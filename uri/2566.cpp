@@ -3,65 +3,55 @@
 #include <string>
 #include <algorithm>
 #include <vector>
-#define INF 999999999
-#define par pair<long long, long long>
+#include <cmath>
+#include <iomanip>
+#include <map>
+#include <cstring>
+#include <set>
+#include <stack>
+#include <bitset>
+#define ll long long
+#define INF (1e9)
+#define MAX (int) (2e5 + 5)
+#define MOD 1000000007
+#define par pair<int, int>
+#define all(v) v.begin(), v.end()
+#define sz(x) (int) ((x).size())
+#define esq(x) (x<<1)
+#define dir(x) ((x<<1)|1)
+#define lsb(x) (x & -x)
+#define W(x) cout << #x << ": " << x << endl
+#define Wii(x) cout << x.first << ' ' << x.second << endl
 #define _ ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
 using namespace std;
 
-long long n, m, a, b, c, t, dist[909], k, u, d, v, w;
-vector<par> grafo[902];
-priority_queue<par, vector<par>, greater<par> > fila;
-
-int dijkstra(int x)
-{
-    fila.push(make_pair(0, x));
-    dist[x] = 0;
-
-    while (!fila.empty())
-    {
-        u = fila.top().second, d = fila.top().first; fila.pop();
-
-        if (d > dist[u]) continue;
-
-        for (int i = 0; i < grafo[u].size(); i++)
-        {
-            v = grafo[u][i].first, w = grafo[u][i].second;
-
-            if (dist[v] > dist[u] + w)
-            {
-                dist[v] = dist[u] + w;
-                fila.push(make_pair(dist[v], v));
-            }
-        }
-    }
-
-    return dist[n + x - 1];
-}
+ll dist[101][101][2], n, m, a, b, c, t;
 
 int main()
 {_
-    while (cin >> n >> m)
-    {
-        for (int i = 0; i <= 810; i++)
-        {
-            if (grafo[i].size()) grafo[i].clear();
-            dist[i] = INF;
-        }
- 
-        while (m--)
-        { 
-            cin >> a >> b >> t >> c;
-            if (t)
-            {
-                grafo[a].push_back(make_pair(b, c));
-            }
-            else
-            {
-                grafo[a+n].push_back(make_pair(b+n, c));
-            }
-        }
+	while (cin >> n >> m)
+	{
+		for (int i = 1; i <= n; i++)
+			for (int j = 1; j <= n; j++)
+				dist[i][j][0] = dist[i][j][1] = (i==j?0:INF);
+		while (m--)
+		{
+			cin >> a >> b >> t >> c;
+			dist[a][b][t] = c;
+		}
 
-        cout << min(dijkstra(1), dijkstra(n + 1)) << endl;
-    }
+		for (int k = 1; k <= n; k++)
+			for (int i = 1; i <= n; i++)
+				for (int j = 1; j <= n; j++)
+				{
+					dist[i][j][0] = min(dist[i][j][0], dist[i][k][0] + dist[k][j][0]);
+					dist[i][j][1] = min(dist[i][j][1], dist[i][k][1] + dist[k][j][1]);
+				}
+
+		cout << min(dist[1][n][0], dist[1][n][1]) << endl;
+	}
 }
+
+
+
