@@ -26,7 +26,10 @@
 
 using namespace std;
 
+int a, b;
+
 int main()
 {_
-
+	cin >> a >> b;
+	cout << max(a+b, a-b) << endl << min(a+b, a-b) << endl;
 }

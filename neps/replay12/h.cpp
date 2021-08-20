@@ -26,7 +26,18 @@
 
 using namespace std;
 
+string s;
+int n, resp;
+
 int main()
 {_
+	cin >> n >> s;
+	for (int i = 0; i < n; i++)
+	{
+		if (i&1 && s[i] != 'O') resp++;
+		if (!(i&1) && s[i] != 'I') resp++;
+	}
 
-}
+	cout << resp << endl;
+}	
+

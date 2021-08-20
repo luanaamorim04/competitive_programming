@@ -28,5 +28,7 @@ using namespace std;
 
 int main()
 {_
-
+	int a, b, c;
+	cin >> a >> b >> c;
+	cout << (c >= a && c < b) << endl;
 }

@@ -26,7 +26,26 @@
 
 using namespace std;
 
+char c;
+int arr[MAX], n;
+
 int main()
 {_
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> c;
+		if (c == 'J') arr[i] = 0;
+		if (c == 'O') arr[i] = 1;
+		if (c == 'I') arr[i] = 2;
+	}
 
+	sort(arr, arr+n);
+	for (int i = 0; i < n; i++)
+	{
+		if (arr[i] == 0) cout << "J";
+		if (arr[i] == 1) cout << "O";
+		if (arr[i] == 2) cout << "I";
+	}
+	cout << endl;
 }

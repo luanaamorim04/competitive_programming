@@ -26,7 +26,17 @@
 
 using namespace std;
 
+int n, arr[MAX], m, p[MAX];
+
 int main()
 {_
+	cin >> n;
+	for (int i = 1; i <= n; i++)
+	{
+		cin >> p[i];
+		if (p[i] > p[m]) m = i;
+		arr[i] += arr[i-1] + p[i];
+	}
 
+	cout << arr[m-1] << endl << arr[n] - arr[m] << endl;
 }
