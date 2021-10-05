@@ -26,26 +26,27 @@
 
 using namespace std;
 
-int dp[MAX], g[MAX], h[MAX], n, a, b, resp;
+int h[MAX], d[MAX], g[MAX], a, b, n;
 vector<int> grafo[MAX];
 
 int f(int u, int p = 0)
 {
-	int a = -INF, b = -INF;
+	int a = 0, b = 0;
 	for (int v : grafo[u])
 	{
-		if (v == p) continue;
+		if (v==p) continue;
 		f(v, u);
-		dp[u] = max(dp[u], dp[v]);
-		a = max(a, h[v]);
+		h[u] = max(h[u], h[v] + g[u] - 2);
+		d[u] = max(d[u], d[v]);
 		if (a > b) swap(a, b);
-		h[u] = max(h[u], max(g[v] + g[u] - 2, h[v] + g[u] - 2));
+		a = max(a, h[v]);
 	}
 
-	dp[u] = max(dp[u], h[u]);
-	dp[u] = max(dp[u], b + g[u] - 2);
-	dp[u] = max(dp[u], a + b + g[u] - 4);
-	return dp[u];
+	d[u] = max(d[u], h[u]);
+	d[u] = max(d[u], a+b+g[u]-4);
+	h[u] = max(h[u], g[u]);
+
+	return d[u];
 }
 
 int main()
@@ -56,12 +57,21 @@ int main()
 		cin >> a >> b;
 		grafo[a].push_back(b);
 		grafo[b].push_back(a);
-		g[a]++;
-		g[b]++;
+		g[a]++, g[b]++;
 	}
 
-	cout << f(1) << endl;
-}
+	cout << f(1) << endl;	
+}	
+
+
+
+
+
+
+
+
+
+
 
 
 
