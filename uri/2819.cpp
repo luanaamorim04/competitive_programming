@@ -12,7 +12,7 @@
 #include <bitset>
 #define ll long long
 #define INF (1e9)
-#define MAX 30
+#define MAX 60
 #define MOD 1000000007
 #define par pair<int, int>
 #define all(v) v.begin(), v.end()
@@ -68,29 +68,24 @@ matrix fexpo(matrix b, ll e)
 
 int main()
 {_
-	cin >> teste;
-	while (teste--)
+	cin >> n >> m >> k;
+	ll resp = 0;
+	for (int i = 0; i < m; i++)
+		for (int j = 0; j < m; j++)
+			t.m[i][j] = 1;
+
+	for (int i = 0; i < k; i++)
 	{
-		cin >> n >> m >> k;
-		ll resp = 0;
-		memset(t.m, 0, sizeof t.m);
-		for (int i = 0; i < m; i++)
-			for (int j = 0; j < m; j++)
-				t.m[i][j] = 1;
-
-		for (int i = 0; i < k; i++)
-		{
-			cin >> a >> b;
-			t.m[a-'a'][b-'a'] = 0;
-		}
-
-		t = fexpo(t, n-1);
-		for (int i = 0; i < m; i++)
-			for (int j = 0; j < m; j++)
-				resp = (resp + t.m[i][j]) % MOD;
-
-		cout << resp << endl;
+		cin >> a >> b;
+		t.m[(a>='a'?a-'a':a-'A')][(b>='a'?b-'a':b-'A')] = 0;
 	}
+
+	t = fexpo(t, n-1);
+	for (int i = 0; i < m; i++)
+		for (int j = 0; j < m; j++)
+			resp = (resp + t.m[i][j]) % MOD;
+
+	cout << resp << endl;
 }
 
 
