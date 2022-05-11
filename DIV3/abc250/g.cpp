@@ -26,8 +26,6 @@
 
 using namespace std;
 
-// dp[dia][qtd] = max(dp[dia-1][qtd], dp[dia-1][qtd+1]-c, dp[dia-1][qtd-1]+c)
-
 ll dp[MAX], last[MAX], arr[MAX], n, resp;
 priority_queue<ll> pq;
 
