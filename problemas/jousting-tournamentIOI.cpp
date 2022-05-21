@@ -26,10 +26,10 @@
 
 using namespace std;
 
-int resp[MAX], vertice[MAX], total, prox[MAX], val[MAX], r, st[MAX<<2], st1[MAX<<2], lazy[MAX<<2];
-par intervalo[MAX];
+int resp[MAX], a1[MAX], a2[MAX], n, vertice[MAX], total, prox[MAX], val[MAX], r, st[MAX<<2], st1[MAX<<2], lazy[MAX<<2], c;
+pair<int, int> intervalo[MAX];
 vector<int> grafo[MAX];
-vector<par> ans;
+vector<pair<int, int> > ans;
 
 void build(int idx, int i, int j)
 {
@@ -102,15 +102,14 @@ void bfs(int n)
 	while (!fila.empty())
 	{
 		auto[u, p] = fila.front(); fila.pop();
+		if (u > n && maior(1, 1, n, intervalo[u].first, intervalo[u].second-1) > r) resp[u] = -1;
+		ans.push_back({resp[u], -intervalo[u].first});
 		for (int v : grafo[u])
 		{
 			if (v==p) continue;
 			resp[v] = max(resp[v], 1+resp[u]);
 			fila.push({v, u});
 		}
-
-		if (maior(1, 1, n, intervalo[u].first, intervalo[u].second-1) > r) resp[u] = -1;
-		ans.push_back({resp[u], -intervalo[u].first});
 	}
 }
 
@@ -131,8 +130,8 @@ int GetBestPosition(int n, int c, int R, int *k, int *a, int *b)
 	for (int i = 0; i < c; i++)
 	{
 		++total;
-		int l = posicao(1, 1, n, a[i]);
-		int r = posicao(1, 1, n, b[i]);
+		int l = posicao(1, 1, n, a[i]+1);
+		int r = posicao(1, 1, n, b[i]+1);
 		int u = l;
 		while (u != r)
 		{
@@ -152,8 +151,20 @@ int GetBestPosition(int n, int c, int R, int *k, int *a, int *b)
 	bfs(n);
 	sort(all(ans), greater<par>());
 
-	return -ans[0].second;	
+	return -(ans[0].second+1);	
 }
+
+// int main()
+// {_
+// 	cin >> n >> c >> r;
+// 	for (int i = 1; i < n; i++)
+// 		cin >> val[i];
+
+// 	for (int i = 0; i < c; i++)
+// 		cin >> a1[i] >> a2[i];
+	
+// 	cout << GetBestPosition(n, c, r, val, a1, a2) << endl;
+// }
 
 
 
