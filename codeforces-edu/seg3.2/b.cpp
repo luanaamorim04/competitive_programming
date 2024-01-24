@@ -9,21 +9,36 @@ using namespace std;
 int st[MAXN<<2], m, n, op, l, r, a, b;
 pair<int, int> lazy[MAXN<<2];
 
+struct L
+{
+	int a1, r, c;
+};
+
+L lazy[MAXN<<2];
+
 void push(int idx, int i, int j)
 {
-	if(lazy[idx].first == lazy[idx].second == 0) return;
-	int a1 = lazy[idx].second, an = lazy[idx].second*(j-i+1);
-	st[idx] = ((a1+an) * (j-i+1))>>1;
+	if(lazy[idx].a1 == 0 && lazy[idx].c == 0) return;
+	int a1 = lazy[idx].a1, an = a1 + lazy[idx].r*(j-i+1);
+//	a1 = an = 0;
+	cout << "a1: " << a1 << " an: " << an << endl;
+	st[idx] += (((a1+an) * (j-i+1))>>1) + lazy[idx].c*(j-i+1);
+	cout << "push: " << st[idx] << endl;
 	if (i != j)
 	{
-		lazy[esq(idx)].first += lazy[idx].first;
-		lazy[dir(idx)].first += lazy[idx].first;
-		lazy[esq(idx)].second += lazy[idx].second;
-		lazy[dir(idx)].second += (lazy[idx].second*(((j+i)>>1)+1))>>1;
+		lazy[esq(idx)].c += lazy[idx].c;
+		lazy[dir(idx)].c += lazy[idx].c;
+		lazy[esq(idx)].a1 += lazy[idx].a1;
+		lazy[dir(idx)].a1 += lazy[idx].a1 + (lazy[idx].r*(((j+i)>>1)+1))>>1;
 	}
 
 	lazy[idx] = {0, 0};
 }
+
+1 2 3 4
+1 2 4 8
+
+2 4 7 12
 
 int query(int idx, int i, int j, int l, int r)
 {
@@ -38,13 +53,16 @@ int query(int idx, int i, int j, int l, int r)
 
 void update(int idx, int i, int j, int l, int r, int a, int b)
 {
-	push(idx, i, j);
+//	push(idx, i, j);
 	if (i > r || j < l) return;
 	if (i >= l && j <= r)
 	{
-		lazy[idx].second = b;
+		cout << "update: " << i << ' ' << j << endl;
+		lazy[idx].second = b*(i-l+1);
 		lazy[idx].first = a;
+		cout << lazy[idx].second << "x + " << lazy[idx].first << endl; 
 		push(idx, i, j);
+		cout << "sum: " << st[idx] << endl;
 		return;
 	}
 	int mid = (i+j)>>1;
@@ -69,5 +87,6 @@ int32_t main()
 			cin >> l;
 			cout << query(1, 1, n, l, l) << endl;
 		}
+		break;
 	}
 }
