@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
 #define INF (int) (1e9)
 #define MAXN (int) (3e5 + 10)
 #define all(x) x.begin(), x.end()
@@ -33,6 +33,7 @@ void join(int a, int b, int c, vector<iii> &arr2)
 	grafo[a].push_back({b, c});
 	grafo[b].push_back({a, c});
 	pai[A] = B;
+	menorr[B] = min(menorr[B], c);
 }
 
 void dfs(int u, int p, int w)
@@ -52,14 +53,13 @@ void dfs(int u, int p, int w)
 
 int is_anc(int u, int v)
 {
-	return (tin[u] <= tin[v]) && (tout[v] <= tout[u]);
+	return tin[u] <= tin[v] && tout[v] <= tout[u];
 }
 
 int least(int u, int v)
 {
 	if (is_anc(v, u)) swap(v, u);
 	int resp = INF;
-
 	for (int i = MAXL-1; i >= 0; i--)
 	{
 		if (up[v][i] && !is_anc(up[v][i], u)) 
@@ -70,7 +70,23 @@ int least(int u, int v)
 
 	}
 
-	return min(resp, menor[v][0]);
+	resp = min(resp, menor[v][0]);
+	v = up[v][0];
+
+	if (v == u) return resp;
+
+
+	for (int i = MAXL-1; i >= 0; i--)
+	{
+		if (up[u][i] && !is_anc(up[u][i], v)) 
+		{
+			resp = min(resp, menor[u][i]);
+			u = up[u][i];
+		}
+
+	}
+
+	return min(resp, menor[u][0]);
 }
 
 void path(int u, int p)
@@ -82,7 +98,7 @@ void path(int u, int p)
 
 
 int32_t main()
-{_
+{
 	cin >> teste;
 	while (teste--)
 	{
@@ -95,6 +111,7 @@ int32_t main()
 			pai[i] = i;
 			for (int j = 0; j < MAXL; j++)
 				menor[i][j] = INF;
+			menorr[i] = INF;
 		}
 		vector<iii> arr, arr2;
 		t = 0;
@@ -117,6 +134,7 @@ int32_t main()
 		{
 			if (resp > min(w, least(u, v))) 
 			{
+
 				resp = min(w, least(u, v));
 				ini = u, fim = v;
 			}
@@ -138,3 +156,4 @@ int32_t main()
 		
 	}
 }
+
