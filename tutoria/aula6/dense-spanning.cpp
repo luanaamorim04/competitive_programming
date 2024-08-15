@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+//#include <bits/stdc++.h>
 #define MAXN (int) (1e3 + 10)
 #define iii tuple<int, int, int>
 #define all(x) x.begin(), x.end()
@@ -14,12 +15,13 @@ void join(int a, int b)
 {
 	if (tam[a] < tam[b]) swap(a, b);
 	pai[b] = a;
+	tam[a] += tam[b];
 }
 
 int find(int x)
 {
 	if (x == pai[x]) return x;
-	return find(pai[x]);
+	return pai[x] = find(pai[x]);
 }
 
 int32_t main()
@@ -62,3 +64,4 @@ int32_t main()
 	}
 
 }
+
