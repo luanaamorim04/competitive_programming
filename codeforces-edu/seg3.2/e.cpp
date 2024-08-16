@@ -26,14 +26,14 @@ void push(int idx, int i, int j)
 	st[idx].last = lazy[idx].last;
 	if (i != j)
 	{
-		lazy[esq(idx)].last = lazy[dir(idx)].last = lazy[idx].last;
+		if (lazy[idx].maior != INF && lazy[idx].maior < lazy[esq(idx)].menor)
 		lazy[esq(idx)].menor = max(lazy[esq(idx)].menor, lazy[idx].menor);
 		lazy[esq(idx)].maior = min(lazy[esq(idx)].maior, lazy[idx].maior);
 		lazy[dir(idx)].menor = max(lazy[esq(idx)].menor, lazy[idx].menor);
 		lazy[dir(idx)].maior = min(lazy[esq(idx)].maior, lazy[idx].maior);
 	}
 
-	lazy[idx] = {-1, INF, -1};
+	lazy[idx] = {0, INF, -1};
 }
 
 void update(int idx, int i, int j, int l, int r, int flag, int h)
@@ -42,7 +42,8 @@ void update(int idx, int i, int j, int l, int r, int flag, int h)
 	if (i > r || j < l) return;
 	if (i >= l && j <= r)
 	{
-		lazy[idx].last = flag;
+		if (!flag && h < st[idx].menor) lazy[idx].last = 0;
+		else lazy[idx].last = 1;
 		if (flag) lazy[idx].menor = h;
 		else lazy[idx].maior = h;
 		push(idx, i, j);
@@ -60,8 +61,12 @@ int query(int idx, int i, int j, int pos)
 	push(idx, i, j);
 	if (i == j)
 	{
-		if (st[idx].menor > st[idx].maior) return st[idx].maior;
-		return st[idx].maior;
+		if (st[idx].menor > st[idx].maior) 
+		{
+			if (st[idx].last == 1) return st[idx].menor;
+			return st[idx].maior;
+		}
+		return st[idx].menor;
 	}
 	int mid = (i+j)>>1;
 	if (pos <= mid) return query(esq(idx), i, mid, pos);

@@ -1,0 +1,23 @@
+now: lazy[1 - 1] = {4, 0}
+now: lazy[2 - 2] = {4, 0}
+now: lazy[3 - 4] = {4, 0}
+now: lazy[5 - 7] = {4, 0}
+now: lazy[8 - 8] = {4, 0}
+now: lazy[3 - 3] = {4, 4}
+now: lazy[4 - 4] = {4, 4}
+now: lazy[4 - 4] = {0, 1}
+now: lazy[5 - 9] = {0, 1}
+0
+4
+4
+4
+1
+now: lazy[5 - 6] = {4, 4}
+now: lazy[5 - 5] = {4, 4}
+4
+now: lazy[6 - 6] = {4, 4}
+4
+now: lazy[7 - 7] = {4, 4}
+4
+4
+0

@@ -38,9 +38,11 @@ int32_t main()
 			for (int i = 1; i <= n; i++)
 			{
 				if (dig >= qtd[i])
-					dp[dig][q] = (dp[dig][q] + dp[dig-qtd[i]][q]*(base*arr[i]*fat[q]));
+					dp[dig][q] = (dp[dig][q] + dp[dig-qtd[i]][q-1]*(base*arr[i]));
 
 			}
+
+
 
 			resp = (resp + dp[dig][q]) % MOD;
 
