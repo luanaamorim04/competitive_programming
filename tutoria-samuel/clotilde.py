@@ -29,11 +29,20 @@ def main():
 			
 			vis[num] = 1
 			
-			fila.put((num + 1, dist + 1))
-			fila.put((num - 1, dist + 1))
-			fila.put((num * 2, dist + 1))
-			fila.put((num * 3, dist + 1))
-			if num % 2 == 0:
+			if not vis[num + 1]:
+				vis[num + 1] = 1
+				fila.put((num + 1, dist + 1))
+			if not vis[num - 1]:
+				vis[num - 1] = 1
+				fila.put((num - 1, dist + 1))
+			if not vis[num*2]:
+				vis[num*2] = 1
+				fila.put((num * 2, dist + 1))
+			if not vis[num*3]:
+				vis[num*3] = 1
+				fila.put((num * 3, dist + 1))
+			if num % 2 == 0 and not vis[num//2]:
+				vis[num//2] = 1
 				fila.put((num // 2, dist + 1))
 		
 
