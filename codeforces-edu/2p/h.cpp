@@ -16,13 +16,15 @@ int32_t main()
 
 	sort(a+1, a+n+1, greater<int>());
 	sort(b+1, b+m+1, greater<int>());
-	int soma = 0, i = 1;
-	while (soma+A <= s && i <= n) soma += A, v.push_back(a[i++]);
+	int soma = 0, idx = 1, idy = 1, diff = (B+A-1)/A;
+	while (soma+A <= s && idx <= n) soma += A, v.push_back(a[idx++]);
 
-	int dist = 
-	for (int i = v.size()-1; i >= 0; i--)
+
+	int l = idx-1;
+	for (int i = 1; i <= m; i++)
 	{
-
+		int sum = 0, c;
+		while (sum < b[idy] &&)
 	}
 
 
